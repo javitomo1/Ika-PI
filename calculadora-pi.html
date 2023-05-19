@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--  Font Awesome  -->
+  <script src="https://kit.fontawesome.com/31370fad5f.js" crossorigin="anonymous"></script>
+  <!--  CSS  -->
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <style>
+    body, .pi-contenedor-principal, .pi-contenedor-ingrese, p, .pi-contenedor-datos, .pi-contenedor-tabla, .pi-entrada, .pi-label, .pi-subtitulo, .pi-tabla, .pi-titulo {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body {
+        background-image: url(img/background.jpg);
+    }
+    .pi-contenedor-principal {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 40px 10px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .pi-contenedor-datos {
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        color: rgb(114,59,3);
+        font-size: 1.4rem;
+        padding: 20px;
+    }
+    .pi-contenedor-ingrese {
+        padding: 5px 0;
+    }
+    .pi-taj {
+        text-align: justify;
+    }
+    .pi-titulo, .pi.subtitulo, .pi-label {
+        color: rgb(114,59,3);
+    }
+    .pi-titulo{
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .pi-subtitulo{
+        text-align: center;
+        margin-top: 30px;
+        font-size: 1.8rem;
+    }
+    .pi-contenedor-marco {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .pi-header-contenedor-tabla{
+        width: 990px;
+        height: 40px;
+        background-image: url(img/bg_head_left.png), url(img/bg_head.png), url(img/bg_body_left.png), url(img/bg_body_right.png);
+        background-position: left top, right top, left top, right top;
+        background-repeat: repeat-y, repeat-y, repeat-y, repeat-y;  
+    }
+    .pi-contenedor-tabla {
+        background-image: url(img/bg_body_left.png), url(img/bg_body_right.png); 
+        background-position: left bottom, right bottom;
+        background-repeat: repeat-y, repeat-y;
+        width: 990px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    .pi-footer-contenedor-tabla {
+        background-image: url(img/bg_footer_l.png), url(img/bg_footer_r.png), url(img/bg_footer_pat.png);
+        background-position: bottom left, bottom right, bottom left;
+        background-repeat: no-repeat, no-repeat, repeat-x;
+        width: 1010px;
+        height: 57px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+        border-radius: 5px;
+    }
+    .pi-tabla {
+        border-collapse: collapse;
+        color: rgb(114,59,3);
+        background-color: rgb(248, 238, 197);
+        width: 200px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .pi-tabla th, .pi-tabla td {
+        padding: 5px;
+        border: 1px solid black;
+        cursor: pointer;
+        text-align: center;
+    }
+    .pi-tabla .selected {
+        background-color: rgb(129, 249, 129);
+    }
+    .pi-entrada {
+        padding: 0 5px;
+        width: 100px;
+        font-size: 1.3rem;
+        outline: 1px solid rgb(114,59,3);
+        border: none;
+        border-radius: 3px;
+        background: inherit;
+    }
+    .pi-entrada:focus {
+        outline: 1px solid rgb(114,59,3);
+        background: inherit;
+        border: none;
+    }
+    p {
+        padding: 5px 0;
+    }
+    footer {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: rgb(114,59,3);
+        font-weight: 600;
+        text-align: center;
+        font-size: 1.2rem;
+        padding-bottom: 20px;
+    }
+  </style>
+  <!--  Google Fonts  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <!-- Scripts -->
+  <!-- <script src="app.js" defer></script> -->
+  <!-- Title -->
+  <title>Calculadora PI</title>
+</head>
+<body>
+    <div class="pi-contenedor-principal">
+        <div class="pi-contenedor-datos">
+            <h1 class="pi-titulo">Calculadora Ika-PI</h1>
+            <p class="pi-taj">Calculadora Ika-PI es una herramienta con la cual podrá calcular el tiempo que le falta en horas, días y años, en acabar o completar las investigaciones seleccionadas según su produc- ción en puntos de investigación(PI) mediante academias y experimentos.</p>
+            <p class="pi-taj">Con un óptico a nivel 50, los experimentos le proporcionan el 100% del costo en puntos de investigación, puede añadir al cálculo la producción de materias que desee invertir en estos.</p>
+            <p class="pi-taj">Los valores de las casillas que seleccione en la tabla se añadirán a la suma total. Puede ver la suma total de cada área de investigación en la última celda de su respectiva tabla.</p>
+            <p>Suma total: <span id="sumaTotal">0 PI</span></p>
+            <!-- <h2 class="pi-subtitulo">Calculadora de tiempo de producción</h2>
+            <p>Calcula el tiempo que tardarías con X producción en completar tu objetivo.</p> -->
+            <div class="pi-contenedor-ingrese">
+                <label class="pi-label" for="valor">Ingrese su producción por hora de PI:</label>
+                <input class="pi-entrada" type="number" id="valor" min="1">
+            </div>
+            <p id="resultado"></p>
+            <p id="resultadoDiv24"></p>
+            <p id="resultadoDiv365"></p>
+        </div>
+        <div class="pi-contenedor-marco">
+            <div class="pi-header-contenedor-tabla"></div>
+            <div class="pi-contenedor-tabla">
+                <table id="precioTabla1" class="pi-tabla">
+                    <thead>
+                        <tr>
+                            <th colspan="2">NAVEGACIÓN</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"><img src="img/navegacion.jpg"></th>
+                        </tr>
+                        <tr>
+                            <th>NIVEL</th>
+                            <th>COSTE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 1</td>
+                            <td>532.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 2</td>
+                            <td>1.065.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 3</td>
+                            <td>1.598.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 4</td>
+                            <td>2.131.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 5</td>
+                            <td>2.664.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 6</td>
+                            <td>3.196.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 7</td>
+                            <td>3.729.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 8</td>
+                            <td>4.262.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 9</td>
+                            <td>4.795.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 10</td>
+                            <td>5.328.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 11</td>
+                            <td>5.860.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 12</td>
+                            <td>6.393.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 13</td>
+                            <td>6.926.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 14</td>
+                            <td>7.459.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 15</td>
+                            <td>7.992.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 16</td>
+                            <td>8.524.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 17</td>
+                            <td>9.057.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 18</td>
+                            <td>9.590.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 19</td>
+                            <td>10.123.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 20</td>
+                            <td>10.656.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 21</td>
+                            <td>11.188.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 22</td>
+                            <td>11.721.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 23</td>
+                            <td>12.254.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 24</td>
+                            <td>12.787.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 25</td>
+                            <td>13.320.000</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total:</td>
+                            <td id="total1">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table id="precioTabla2" class="pi-tabla">
+                    <thead>
+                        <tr>
+                            <th colspan="2">ECONOMÍA</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"><img src="img/economia.jpg"></th>
+                        </tr>
+                        <tr>
+                            <th>NIVEL</th>
+                            <th>COSTE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 1</td>
+                            <td>532.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 2</td>
+                            <td>1.065.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 3</td>
+                            <td>1.598.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 4</td>
+                            <td>2.131.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 5</td>
+                            <td>2.664.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 6</td>
+                            <td>3.196.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 7</td>
+                            <td>3.729.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 8</td>
+                            <td>4.262.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 9</td>
+                            <td>4.795.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 10</td>
+                            <td>5.328.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 11</td>
+                            <td>5.860.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 12</td>
+                            <td>6.393.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 13</td>
+                            <td>6.926.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 14</td>
+                            <td>7.459.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 15</td>
+                            <td>7.992.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 16</td>
+                            <td>8.524.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 17</td>
+                            <td>9.057.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 18</td>
+                            <td>9.590.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 19</td>
+                            <td>10.123.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 20</td>
+                            <td>10.656.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 21</td>
+                            <td>11.188.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 22</td>
+                            <td>11.721.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 23</td>
+                            <td>12.254.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 24</td>
+                            <td>12.787.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 25</td>
+                            <td>13.320.000</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total:</td>
+                            <td id="total2">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table id="precioTabla3" class="pi-tabla">
+                    <thead>
+                        <tr>
+                            <th colspan="2">CIENCIA</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"><img src="img/ciencia.jpg"></th>
+                        </tr>
+                        <tr>
+                            <th>NIVEL</th>
+                            <th>COSTE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 1</td>
+                            <td>610.560</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 2</td>
+                            <td>1.221.120</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 3</td>
+                            <td>1.831.680</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 4</td>
+                            <td>2.442.240</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 5</td>
+                            <td>3.052.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 6</td>
+                            <td>3.663.360</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 7</td>
+                            <td>4.273.920</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 8</td>
+                            <td>4.884.480</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 9</td>
+                            <td>5.495.040</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 10</td>
+                            <td>6.105.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 11</td>
+                            <td>6.716.160</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 12</td>
+                            <td>7.326.720</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 13</td>
+                            <td>7.937.280</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 14</td>
+                            <td>8.547.840</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 15</td>
+                            <td>9.158.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 16</td>
+                            <td>9.768.960</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 17</td>
+                            <td>10.379.520</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 18</td>
+                            <td>10.990.080</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 19</td>
+                            <td>11.600.640</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 20</td>
+                            <td>12.211.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 21</td>
+                            <td>12.821.760</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 22</td>
+                            <td>13.432.320</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 23</td>
+                            <td>14.042.880</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 24</td>
+                            <td>14.653.440</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 25</td>
+                            <td>15.264.000</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total:</td>
+                            <td id="total3">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table id="precioTabla4" class="pi-tabla">
+                    <thead>
+                        <tr>
+                            <th colspan="2">MILICIA</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"><img src="img/milicia.jpg"></th>
+                        </tr>
+                        <tr>
+                            <th>NIVEL</th>
+                            <th>COSTE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 1</td>
+                            <td>532.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 2</td>
+                            <td>1.065.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 3</td>
+                            <td>1.598.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 4</td>
+                            <td>2.131.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 5</td>
+                            <td>2.664.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 6</td>
+                            <td>3.196.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 7</td>
+                            <td>3.729.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 8</td>
+                            <td>4.262.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 9</td>
+                            <td>4.795.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 10</td>
+                            <td>5.328.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 11</td>
+                            <td>5.860.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 12</td>
+                            <td>6.393.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 13</td>
+                            <td>6.926.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 14</td>
+                            <td>7.459.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 15</td>
+                            <td>7.992.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 16</td>
+                            <td>8.524.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 17</td>
+                            <td>9.057.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 18</td>
+                            <td>9.590.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 19</td>
+                            <td>10.123.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 20</td>
+                            <td>10.656.000</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 21</td>
+                            <td>11.188.800</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 22</td>
+                            <td>11.721.600</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 23</td>
+                            <td>12.254.400</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 24</td>
+                            <td>12.787.200</td>
+                        </tr>
+                        <tr onclick="seleccionarFila(this)">
+                            <td>Futuro 25</td>
+                            <td>13.320.000</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total:</td>
+                            <td id="total4">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="pi-footer-contenedor-tabla">
+
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>by Astralis</p>
+    </footer>
+    <script>
+        function seleccionarFila(fila) {
+            fila.classList.toggle("selected");
+            calcularTotal();
+            }
+            function calcularTotal() {
+            var totalElement1 = document.getElementById("total1");
+            var totalElement2 = document.getElementById("total2");
+            var totalElement3 = document.getElementById("total3");
+            var totalElement4 = document.getElementById("total4");
+
+            var total1 = 0;
+            var total2 = 0;
+            var total3 = 0;
+            var total4 = 0;
+
+            var filasSeleccionadas1 = document.querySelectorAll("#precioTabla1 .selected");
+            filasSeleccionadas1.forEach(function(fila) {
+            var materia = parseInt(fila.lastElementChild.innerText.replace(/\./g, ""));
+            total1 += materia;
+            });
+
+            var filasSeleccionadas2 = document.querySelectorAll("#precioTabla2 .selected");
+            filasSeleccionadas2.forEach(function(fila) {
+            var materia = parseInt(fila.lastElementChild.innerText.replace(/\./g, ""));
+            total2 += materia;
+            });
+
+            var filasSeleccionadas3 = document.querySelectorAll("#precioTabla3 .selected");
+            filasSeleccionadas3.forEach(function(fila) {
+            var materia = parseInt(fila.lastElementChild.innerText.replace(/\./g, ""));
+            total3 += materia;
+            });
+
+            var filasSeleccionadas4 = document.querySelectorAll("#precioTabla4 .selected");
+            filasSeleccionadas4.forEach(function(fila) {
+            var materia = parseInt(fila.lastElementChild.innerText.replace(/\./g, ""));
+            total4 += materia;
+            });
+
+            totalElement1.innerText = total1.toLocaleString();
+            totalElement2.innerText = total2.toLocaleString();
+            totalElement3.innerText = total3.toLocaleString();
+            totalElement4.innerText = total4.toLocaleString();
+
+            var sumaTotal = total1 + total2 + total3 + total4;
+            var sumaTotalElement = document.getElementById("sumaTotal");
+            sumaTotalElement.innerText = sumaTotal.toLocaleString() + " PI";
+            }
+            function calcularResultado() {
+                var sumaTotal = parseInt(document.getElementById("sumaTotal").innerText.replace(/\./g, "").split(" ")[0]);
+                var valor = parseInt(document.getElementById("valor").value);
+
+                if (!isNaN(valor) && valor !== 0) {
+                    var resultado = sumaTotal / valor;
+                    var resultadoDiv24 = resultado / 24;
+                    var resultadoDiv365 = resultadoDiv24 / 365;
+
+                    document.getElementById("resultado").innerText = "Necesita " + resultado.toFixed(2) + " horas para completar su objetivo.";
+                    document.getElementById("resultadoDiv24").innerText = "Su objetivo en días: " + resultadoDiv24.toFixed(2) + " días.";
+                    document.getElementById("resultadoDiv365").innerText = "Su objetivo en años: " + resultadoDiv365.toFixed(2) + " años.";
+                } else {
+                    document.getElementById("resultado").innerText = "";
+                    document.getElementById("resultadoDiv24").innerText = "";
+                    document.getElementById("resultadoDiv365").innerText = "";
+                }
+            }
+
+            var inputElement = document.getElementById("valor");
+            inputElement.addEventListener("input", calcularResultado);
+    </script>
+</body>
+</html>
